@@ -11,13 +11,15 @@ const RegisterPage = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: '', email: '', password: '', phone: '', role: 'user' });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = register(form.name, form.email, form.password, form.role);
+    const res = await register(form.name, form.email, form.password, form.role, form.phone);
     if (res.success) {
       toast.success('Account created successfully!');
       const path = form.role === 'agent' ? '/dashboard/agent' : '/dashboard/user';
       navigate(path);
+    } else {
+      toast.error(res.error);
     }
   };
 
@@ -27,8 +29,8 @@ const RegisterPage = () => {
         <div className="absolute inset-0 opacity-15" style={{ backgroundImage: 'url(https://images.pexels.com/photos/36171603/pexels-photo-36171603.jpeg)', backgroundSize: 'cover', backgroundPosition: 'center', mixBlendMode: 'overlay' }} />
         <div className="relative z-10">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-white/15 backdrop-blur flex items-center justify-center font-serif text-xl">B</div>
-            <div><div className="font-serif text-xl font-bold">Bahubali</div><div className="text-[10px] tracking-[0.2em] uppercase opacity-80">Property</div></div>
+            <div className="w-11 h-11 rounded-xl bg-white/15 backdrop-blur flex items-center justify-center font-bold text-sm tracking-tight">GLC</div>
+            <div><div className="font-serif text-xl font-bold">GLC Property</div><div className="text-[10px] tracking-[0.2em] uppercase opacity-80">by GLCZONE</div></div>
           </Link>
         </div>
         <div className="relative z-10">
@@ -60,7 +62,7 @@ const RegisterPage = () => {
 
             <label className="flex items-start gap-2 text-xs text-slate-600">
               <input type="checkbox" required className="mt-0.5" />
-              <span>I agree to Bahubali's <a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a>.</span>
+              <span>I agree to GLC Property's <a href="#" className="underline">Terms of Service</a> and <a href="#" className="underline">Privacy Policy</a>.</span>
             </label>
 
             <Button type="submit" className="w-full text-white font-semibold py-6" style={{ background: '#0F6B54' }}>Create Account</Button>

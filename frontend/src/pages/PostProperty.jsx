@@ -30,9 +30,37 @@ const PostProperty = () => {
     );
   }
 
-  const submit = () => {
-    toast.success('Property posted successfully! Redirecting to dashboard...');
-    setTimeout(() => navigate(user.role === 'agent' ? '/dashboard/agent' : '/dashboard/user'), 1500);
+  const submit = async () => {
+    try {
+      const payload = {
+        title: form.title,
+        description: form.description,
+        type: form.purpose,
+        property_type: form.propertyType,
+        city: form.city,
+        locality: form.locality,
+        state: 'Bihar',
+        bhk: parseInt(form.bhk) || 0,
+        area: parseFloat(form.area) || 0,
+        area_unit: 'sq.ft',
+        price: parseFloat(form.price) || 0,
+        furnishing: form.furnishing,
+        possession: form.possession,
+        amenities: [],
+        image: 'https://images.unsplash.com/photo-1655322126436-9dd898d4a636',
+        gallery: [],
+        lat: 26.10,
+        lng: 87.94,
+        posted_by: user.role === 'agent' ? 'Agent' : 'Owner',
+        owner_direct: user.role === 'user'
+      };
+      const { propertiesAPI } = await import('../api');
+      await propertiesAPI.create(payload);
+      toast.success('Property posted successfully! It will be visible after admin verification.');
+      setTimeout(() => navigate(user.role === 'agent' ? '/dashboard/agent' : '/dashboard/user'), 1500);
+    } catch (e) {
+      toast.error(e?.response?.data?.detail || 'Failed to post property');
+    }
   };
 
   const steps = ['Basic Info', 'Location & Area', 'Pricing & Photos', 'Review'];

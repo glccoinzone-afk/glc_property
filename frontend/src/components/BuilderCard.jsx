@@ -4,7 +4,10 @@ import { motion } from 'framer-motion';
 import { MapPin, Building2, ChevronRight } from 'lucide-react';
 import { formatINR } from '../mock';
 
-const BuilderCard = ({ builder, index = 0, tag = null }) => (
+const BuilderCard = ({ builder, index = 0, tag = null }) => {
+  const pricePerSqft = builder.pricePerSqft || builder.price_per_sqft || builder.price;
+  const projects = builder.projects || builder.developer;
+  return (
   <motion.div
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -35,11 +38,11 @@ const BuilderCard = ({ builder, index = 0, tag = null }) => (
       </div>
       <div className="border-x border-emerald-50">
         <div className="text-[10px] text-slate-500 uppercase">Rate/sqft</div>
-        <div className="font-bold text-sm" style={{ color: '#0F6B54' }}>{formatINR(builder.pricePerSqft)}</div>
+        <div className="font-bold text-sm" style={{ color: '#0F6B54' }}>{formatINR(pricePerSqft)}</div>
       </div>
       <div>
         <div className="text-[10px] text-slate-500 uppercase">Projects</div>
-        <div className="font-bold text-sm text-slate-900">{builder.projects}</div>
+        <div className="font-bold text-sm text-slate-900">{projects}</div>
       </div>
     </div>
 
@@ -47,6 +50,7 @@ const BuilderCard = ({ builder, index = 0, tag = null }) => (
       View Details <ChevronRight className="w-4 h-4" />
     </Link>
   </motion.div>
-);
+  );
+};
 
 export default BuilderCard;

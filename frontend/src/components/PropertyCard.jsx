@@ -1,14 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { MapPin, Bed, Ruler, BadgeCheck, Home, Camera, Heart, Scale } from 'lucide-react';
+import { MapPin, Bed, Ruler, BadgeCheck, Home, Camera, Scale } from 'lucide-react';
 import { formatINR } from '../mock';
 import { useCompare } from '../context/CompareContext';
 import { toast } from 'sonner';
 
-const PropertyCard = ({ property, index = 0, size = 'default' }) => {
+const PropertyCard = ({ property, index = 0 }) => {
   const { add, items } = useCompare();
   const inCompare = items.find(i => i.id === property.id);
+
+  // Support both backend snake_case and frontend camelCase
+  const propType = property.propertyType || property.property_type || 'Property';
+  const areaUnit = property.areaUnit || property.area_unit || 'sq.ft';
+  const ownerDirect = property.ownerDirect ?? property.owner_direct;
+  const galleryLen = (property.gallery && property.gallery.length) || 3;
 
   const handleCompare = (e) => {
     e.preventDefault();
@@ -30,9 +36,8 @@ const PropertyCard = ({ property, index = 0, size = 'default' }) => {
         <img src={property.image} alt={property.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-110" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-        {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-2">
-          <span className="px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider text-white uppercase" style={{ background: property.type === 'Sale' ? '#0F6B54' : '#D4A24C', color: property.type === 'Sale' ? 'white' : '#0E1B1F' }}>
+          <span className="px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wider uppercase" style={{ background: property.type === 'Sale' ? '#0F6B54' : '#D4A24C', color: property.type === 'Sale' ? 'white' : '#0E1B1F' }}>
             {property.type === 'Sale' ? 'For Sale' : 'For Rent'}
           </span>
           {property.vip && <span className="px-2.5 py-1 rounded-md text-[10px] font-bold text-slate-900" style={{ background: '#D4A24C' }}>👑 VIP</span>}
@@ -45,7 +50,7 @@ const PropertyCard = ({ property, index = 0, size = 'default' }) => {
               <BadgeCheck className="w-3 h-3" /> Verified
             </span>
           )}
-          {property.ownerDirect && (
+          {ownerDirect && (
             <span className="flex items-center gap-1 px-2 py-1 rounded-md text-[10px] font-bold bg-red-500 text-white">
               No Broker
             </span>
@@ -54,7 +59,7 @@ const PropertyCard = ({ property, index = 0, size = 'default' }) => {
 
         <div className="absolute bottom-3 left-3 flex items-center gap-2 text-white text-xs">
           <span className="flex items-center gap-1 px-2 py-0.5 rounded-md bg-black/50 backdrop-blur-sm">
-            <Camera className="w-3 h-3" /> {property.gallery?.length || 3}
+            <Camera className="w-3 h-3" /> {galleryLen}
           </span>
         </div>
 
@@ -79,8 +84,8 @@ const PropertyCard = ({ property, index = 0, size = 'default' }) => {
           {property.bhk > 0 && (
             <span className="flex items-center gap-1"><Bed className="w-3.5 h-3.5" /> {property.bhk} BHK</span>
           )}
-          <span className="flex items-center gap-1"><Ruler className="w-3.5 h-3.5" /> {property.area} {property.areaUnit}</span>
-          <span className="flex items-center gap-1"><Home className="w-3.5 h-3.5" /> {property.propertyType}</span>
+          <span className="flex items-center gap-1"><Ruler className="w-3.5 h-3.5" /> {property.area} {areaUnit}</span>
+          <span className="flex items-center gap-1"><Home className="w-3.5 h-3.5" /> {propType}</span>
         </div>
 
         <div className="flex items-end justify-between mt-auto pt-3 border-t border-slate-100">
@@ -88,7 +93,7 @@ const PropertyCard = ({ property, index = 0, size = 'default' }) => {
             <div className="text-[10px] text-slate-500 uppercase tracking-wider">Price</div>
             <div className="font-bold text-lg" style={{ color: '#0F6B54' }}>{formatINR(property.price)}</div>
           </div>
-          <Link to={`/property/${property.id}`} className="text-xs font-semibold px-3 py-2 rounded-lg transition-colors" style={{ background: '#0F6B54', color: 'white' }}>
+          <Link to={`/property/${property.id}`} className="text-xs font-semibold px-3 py-2 rounded-lg transition-colors hover:opacity-90" style={{ background: '#0F6B54', color: 'white' }}>
             View Details
           </Link>
         </div>

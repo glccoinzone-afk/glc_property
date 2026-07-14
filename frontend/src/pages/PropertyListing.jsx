@@ -1,19 +1,21 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Filter, SlidersHorizontal, Grid3x3, List, Map, X } from 'lucide-react';
+import { Filter, SlidersHorizontal, Map, X, Loader2 } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import PropertyCard from '../components/PropertyCard';
-import { PROPERTIES, CITIES, BUDGET_OPTIONS } from '../mock';
+import { CITIES } from '../mock';
 import { Button } from '../components/ui/button';
 import { Slider } from '../components/ui/slider';
 import { Checkbox } from '../components/ui/checkbox';
+import { propertiesAPI } from '../api';
 
 const PropertyListing = () => {
-  const [params, setParams] = useSearchParams();
+  const [params] = useSearchParams();
   const [showFilters, setShowFilters] = useState(false);
-  const [view, setView] = useState('grid');
+  const [loading, setLoading] = useState(true);
+  const [items, setItems] = useState([]);
+  const [total, setTotal] = useState(0);
 
   const [city, setCity] = useState(params.get('city') || '');
   const [propertyType, setPropertyType] = useState(params.get('propertyType') || '');
@@ -24,31 +26,42 @@ const PropertyListing = () => {
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [ownerOnly, setOwnerOnly] = useState(false);
   const [amenities, setAmenities] = useState([]);
-  const [sortBy, setSortBy] = useState('relevance');
+  const [sortBy, setSortBy] = useState('newest');
 
-  const filtered = useMemo(() => {
-    let list = [...PROPERTIES];
-    if (city) list = list.filter(p => p.city.toLowerCase().includes(city.toLowerCase()));
-    if (propertyType) list = list.filter(p => p.propertyType.toLowerCase() === propertyType.toLowerCase());
-    if (bhk) list = list.filter(p => `${p.bhk} BHK` === bhk);
-    if (purpose === 'RENT') list = list.filter(p => p.type === 'Rent');
-    if (purpose === 'BUY') list = list.filter(p => p.type === 'Sale');
-    if (furnishing) list = list.filter(p => p.furnishing === furnishing);
-    if (verifiedOnly) list = list.filter(p => p.verified);
-    if (ownerOnly) list = list.filter(p => p.ownerDirect);
-    list = list.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1]);
-    if (amenities.length > 0) list = list.filter(p => amenities.every(a => p.amenities.includes(a)));
-    if (sortBy === 'price-low') list.sort((a, b) => a.price - b.price);
-    if (sortBy === 'price-high') list.sort((a, b) => b.price - a.price);
-    if (sortBy === 'area-large') list.sort((a, b) => b.area - a.area);
-    return list;
+  useEffect(() => {
+    const fetchProps = async () => {
+      setLoading(true);
+      const q = {
+        limit: 50,
+        sort: sortBy,
+        ...(city && { city }),
+        ...(propertyType && { property_type: propertyType }),
+        ...(bhk && { bhk: parseInt(bhk) }),
+        ...(purpose === 'RENT' && { type: 'Rent' }),
+        ...(purpose === 'BUY' && { type: 'Sale' }),
+        ...(furnishing && { furnishing }),
+        ...(verifiedOnly && { verified_only: true }),
+        ...(ownerOnly && { owner_only: true }),
+        min_price: priceRange[0],
+        max_price: priceRange[1]
+      };
+      try {
+        const res = await propertiesAPI.list(q);
+        let list = res.data.items || [];
+        if (amenities.length > 0) list = list.filter(p => amenities.every(a => (p.amenities || []).includes(a)));
+        setItems(list);
+        setTotal(res.data.total || 0);
+      } catch (e) { console.error(e); }
+      setLoading(false);
+    };
+    fetchProps();
   }, [city, propertyType, bhk, purpose, furnishing, verifiedOnly, ownerOnly, priceRange, amenities, sortBy]);
 
   const toggleAmenity = (a) => setAmenities(amenities.includes(a) ? amenities.filter(x => x !== a) : [...amenities, a]);
 
-  const ALL_AMENITIES = ['Swimming Pool', 'Gym', 'Garden', 'Security', 'Lift', 'Club House', 'Play Area', 'Power Backup'];
+  const ALL_AMENITIES = ['Swimming Pool', 'Gym', 'Garden', 'Security', 'Lift', 'Club House', 'Play Area', 'Power Backup', 'CCTV', 'Parking'];
   const PROP_TYPES = ['Apartment', 'Villa', 'Plot', 'Office', 'Bungalow'];
-  const BHK = ['1 BHK', '2 BHK', '3 BHK', '4 BHK', '5+ BHK'];
+  const BHK_LIST = ['1', '2', '3', '4', '5'];
 
   const FilterPanel = () => (
     <div className="space-y-6">
@@ -81,8 +94,8 @@ const PropertyListing = () => {
       <div>
         <h4 className="font-semibold text-slate-900 mb-3 text-sm uppercase tracking-wider">BHK</h4>
         <div className="flex flex-wrap gap-2">
-          {BHK.map(t => (
-            <button key={t} onClick={() => setBhk(bhk === t ? '' : t)} className={`px-3 py-1.5 text-xs rounded-full border transition-colors ${bhk === t ? 'text-white border-transparent' : 'text-slate-700 border-slate-200 hover:border-emerald-300'}`} style={{ background: bhk === t ? '#0F6B54' : 'white' }}>{t}</button>
+          {BHK_LIST.map(t => (
+            <button key={t} onClick={() => setBhk(bhk === t ? '' : t)} className={`px-3 py-1.5 text-xs rounded-full border transition-colors ${bhk === t ? 'text-white border-transparent' : 'text-slate-700 border-slate-200 hover:border-emerald-300'}`} style={{ background: bhk === t ? '#0F6B54' : 'white' }}>{t} BHK</button>
           ))}
         </div>
       </div>
@@ -123,12 +136,12 @@ const PropertyListing = () => {
       <div className="max-w-[1440px] mx-auto px-4 lg:px-8 py-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="font-serif text-3xl md:text-4xl font-bold text-slate-900">Properties in India</h1>
-            <p className="text-slate-600 mt-1">{filtered.length} results found</p>
+            <h1 className="font-serif text-3xl md:text-4xl font-bold text-slate-900">Properties in Bihar & India</h1>
+            <p className="text-slate-600 mt-1">{loading ? 'Loading...' : `${items.length} of ${total} results`}</p>
           </div>
           <div className="flex items-center gap-2">
             <select value={sortBy} onChange={e => setSortBy(e.target.value)} className="px-3 py-2 border border-slate-200 rounded-lg text-sm bg-white">
-              <option value="relevance">Relevance</option>
+              <option value="newest">Newest</option>
               <option value="price-low">Price: Low to High</option>
               <option value="price-high">Price: High to Low</option>
               <option value="area-large">Largest Area</option>
@@ -148,20 +161,21 @@ const PropertyListing = () => {
           </aside>
 
           <main>
-            {filtered.length === 0 ? (
+            {loading ? (
+              <div className="flex items-center justify-center py-24"><Loader2 className="w-10 h-10 animate-spin" style={{ color: '#0F6B54' }} /></div>
+            ) : items.length === 0 ? (
               <div className="text-center py-24 bg-white rounded-2xl">
                 <p className="text-slate-500">No properties match your filters. Try adjusting the search.</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                {filtered.map((p, i) => <PropertyCard key={p.id} property={p} index={i} />)}
+                {items.map((p, i) => <PropertyCard key={p.id} property={p} index={i} />)}
               </div>
             )}
           </main>
         </div>
       </div>
 
-      {/* Mobile filter drawer */}
       {showFilters && (
         <div className="fixed inset-0 z-50 bg-black/50 lg:hidden" onClick={() => setShowFilters(false)}>
           <div className="absolute right-0 top-0 bottom-0 w-[85%] max-w-md bg-white overflow-y-auto p-6" onClick={e => e.stopPropagation()}>

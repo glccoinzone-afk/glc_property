@@ -46,15 +46,15 @@ const Hero = () => {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 backdrop-blur-sm text-xs font-medium text-white/95 mb-6">
             <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#D4A24C' }} />
-            India's Trusted Real Estate Platform
+            India's Trusted Real Estate Platform · A GLCZONE Initiative
           </div>
 
           <h1 className="font-serif text-white text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] mb-6">
             Find Your <em className="not-italic" style={{ color: '#E8C168' }}>Dream</em>
-            <br />Property in India
+            <br />Property in Bihar & Beyond
           </h1>
           <p className="text-lg md:text-xl text-white/85 mb-8 max-w-2xl leading-relaxed">
-            Premium residential, commercial, and agricultural properties curated just for you across 200+ cities.
+            Premium residential, commercial, and agricultural properties across Kishanganj, Bihar and 200+ cities in India. Curated by GLC Property.
           </p>
 
           <div className="flex flex-wrap gap-6 mb-10">

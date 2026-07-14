@@ -14,9 +14,9 @@ const LoginPage = () => {
   const [showPw, setShowPw] = useState(false);
   const [role, setRole] = useState('user');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const res = login(email, password);
+    const res = await login(email, password);
     if (res.success) {
       toast.success(`Welcome back, ${res.user.name}!`);
       const path = res.user.role === 'super_admin' ? '/dashboard/admin' : res.user.role === 'agent' ? '/dashboard/agent' : '/dashboard/user';
@@ -27,9 +27,9 @@ const LoginPage = () => {
   };
 
   const quickFill = (r) => {
-    if (r === 'super_admin') { setEmail('admin@bahubali.com'); setPassword('admin123'); }
-    if (r === 'agent') { setEmail('agent@bahubali.com'); setPassword('agent123'); }
-    if (r === 'user') { setEmail('user@bahubali.com'); setPassword('user123'); }
+    if (r === 'super_admin') { setEmail('admin@glcproperty.com'); setPassword('admin123'); }
+    if (r === 'agent') { setEmail('agent@glcproperty.com'); setPassword('agent123'); }
+    if (r === 'user') { setEmail('user@glcproperty.com'); setPassword('user123'); }
   };
 
   const roles = [
@@ -45,16 +45,16 @@ const LoginPage = () => {
         <div className="absolute inset-0 opacity-15" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1645207825163-4e231ee2d707)', backgroundSize: 'cover', backgroundPosition: 'center', mixBlendMode: 'overlay' }} />
         <div className="relative z-10">
           <Link to="/" className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-white/15 backdrop-blur flex items-center justify-center font-serif text-xl">B</div>
+            <div className="w-11 h-11 rounded-xl bg-white/15 backdrop-blur flex items-center justify-center font-bold text-sm tracking-tight">GLC</div>
             <div>
-              <div className="font-serif text-xl font-bold">Bahubali</div>
-              <div className="text-[10px] tracking-[0.2em] uppercase opacity-80">Property</div>
+              <div className="font-serif text-xl font-bold">GLC Property</div>
+              <div className="text-[10px] tracking-[0.2em] uppercase opacity-80">by GLCZONE</div>
             </div>
           </Link>
         </div>
         <div className="relative z-10">
-          <h2 className="font-serif text-4xl xl:text-5xl font-bold leading-tight mb-4">Welcome back to India's trusted <em style={{ color: '#E8C168' }}>real estate</em> platform.</h2>
-          <p className="text-white/85 max-w-lg">Access your dashboard to manage listings, shortlisted properties, enquiries, and personalized recommendations across 200+ cities.</p>
+          <h2 className="font-serif text-4xl xl:text-5xl font-bold leading-tight mb-4">Welcome back to Bihar's trusted <em style={{ color: '#E8C168' }}>real estate</em> platform.</h2>
+          <p className="text-white/85 max-w-lg">Access your dashboard to manage listings, shortlisted properties, enquiries, and personalized recommendations across Kishanganj, Bihar and 200+ cities.</p>
         </div>
         <div className="relative z-10 flex gap-6 text-sm">
           <div><div className="font-serif text-3xl font-bold" style={{ color: '#E8C168' }}>50K+</div><div className="opacity-80">Properties</div></div>
@@ -68,8 +68,8 @@ const LoginPage = () => {
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md">
           <div className="lg:hidden flex justify-center mb-8">
             <Link to="/" className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-xl flex items-center justify-center text-white font-serif text-xl" style={{ background: '#0F6B54' }}>B</div>
-              <div><div className="font-serif text-xl font-bold brand-emerald" style={{ color: '#0F6B54' }}>Bahubali</div></div>
+              <div className="w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-sm tracking-tight" style={{ background: '#0F6B54' }}>GLC</div>
+              <div><div className="font-serif text-xl font-bold brand-emerald" style={{ color: '#0F6B54' }}>GLC Property</div></div>
             </Link>
           </div>
           <h1 className="font-serif text-3xl md:text-4xl font-bold text-slate-900 mb-2">Sign In</h1>
@@ -112,9 +112,9 @@ const LoginPage = () => {
           <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs">
             <div className="font-semibold text-amber-900 mb-1">Demo Credentials (click role above to auto-fill):</div>
             <div className="text-amber-800 space-y-0.5">
-              <div>Admin: admin@bahubali.com / admin123</div>
-              <div>Agent: agent@bahubali.com / agent123</div>
-              <div>User: user@bahubali.com / user123</div>
+              <div>Admin: admin@glcproperty.com / admin123</div>
+              <div>Agent: agent@glcproperty.com / agent123</div>
+              <div>User: user@glcproperty.com / user123</div>
             </div>
           </div>
 

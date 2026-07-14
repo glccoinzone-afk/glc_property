@@ -30,17 +30,17 @@ const ComparePage = () => {
   const rows = [
     { label: 'Price', key: p => formatINR(p.price) },
     { label: 'Type', key: p => p.type },
-    { label: 'Property Type', key: p => p.propertyType },
+    { label: 'Property Type', key: p => p.propertyType || p.property_type },
     { label: 'City', key: p => p.city },
     { label: 'Locality', key: p => p.locality },
     { label: 'BHK', key: p => `${p.bhk} BHK` },
-    { label: 'Area', key: p => `${p.area} ${p.areaUnit}` },
+    { label: 'Area', key: p => `${p.area} ${p.areaUnit || p.area_unit || 'sq.ft'}` },
     { label: 'Bathrooms', key: p => p.bathrooms },
     { label: 'Parking', key: p => p.parking },
     { label: 'Furnishing', key: p => p.furnishing },
     { label: 'Possession', key: p => p.possession },
     { label: 'Verified', key: p => p.verified },
-    { label: 'Owner Direct', key: p => p.ownerDirect },
+    { label: 'Owner Direct', key: p => p.ownerDirect ?? p.owner_direct },
     { label: 'Builder', key: p => p.builder },
     { label: 'Amenities', key: p => p.amenities }
   ];

@@ -23,10 +23,10 @@ const Header = () => {
         <div className="flex whitespace-nowrap animate-marquee py-2">
           {[0, 1].map(i => (
             <div key={i} className="flex shrink-0 gap-16 pr-16">
-              <span>🏠 Advertising, Marketing, Sales, Branding &amp; Promotion solely on bahubaliproperty.com</span>
-              <span>🏢 New Listings Added Daily</span>
+              <span>🏠 GLC Property by GLCZONE Private Limited — Kishanganj, Bihar</span>
+              <span>🏢 New Listings Added Daily in Kishanganj & Bihar</span>
               <span>📞 +91 9011037538</span>
-              <span>✉️ info@bahubaliproperty.com</span>
+              <span>✉️ info@glcproperty.com</span>
             </div>
           ))}
         </div>
@@ -37,12 +37,12 @@ const Header = () => {
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group">
-              <div className="w-11 h-11 rounded-xl bg-brand-emerald flex items-center justify-center text-white font-serif text-xl shadow-lg group-hover:scale-105 transition-transform" style={{ background: '#0F6B54' }}>
-                B
+              <div className="w-11 h-11 rounded-xl bg-brand-emerald flex items-center justify-center text-white font-bold text-sm shadow-lg group-hover:scale-105 transition-transform tracking-tight" style={{ background: '#0F6B54' }}>
+                GLC
               </div>
-              <div className="leading-tight">
-                <div className="font-serif text-xl font-bold brand-emerald" style={{ color: '#0F6B54' }}>Bahubali</div>
-                <div className="text-[10px] tracking-[0.2em] text-slate-500 uppercase">Property</div>
+              <div className="leading-tight whitespace-nowrap">
+                <div className="font-serif text-lg lg:text-xl font-bold brand-emerald leading-none" style={{ color: '#0F6B54' }}>GLC Property</div>
+                <div className="text-[9px] tracking-[0.2em] text-slate-500 uppercase mt-0.5">by GLCZONE</div>
               </div>
             </Link>
 

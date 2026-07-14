@@ -41,10 +41,10 @@ export const DashboardShell = ({ children, title, subtitle, role }) => {
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-slate-200 hidden lg:flex flex-col">
         <Link to="/" className="p-6 flex items-center gap-3 border-b border-slate-100">
-          <div className="w-11 h-11 rounded-xl flex items-center justify-center text-white font-serif text-xl shadow-lg" style={{ background: '#0F6B54' }}>B</div>
+          <div className="w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-lg tracking-tight" style={{ background: '#0F6B54' }}>GLC</div>
           <div>
-            <div className="font-serif text-xl font-bold" style={{ color: '#0F6B54' }}>Bahubali</div>
-            <div className="text-[10px] tracking-[0.2em] text-slate-500 uppercase">Property</div>
+            <div className="font-serif text-xl font-bold" style={{ color: '#0F6B54' }}>GLC Property</div>
+            <div className="text-[10px] tracking-[0.2em] text-slate-500 uppercase">by GLCZONE</div>
           </div>
         </Link>
 
