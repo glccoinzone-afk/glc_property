@@ -1,0 +1,355 @@
+{
+  "_note": "IMPORTANT - pehle cleanup karo: properties collection mein duplicate titles ban gaye hain (property_seed_data.json 2 baar insert hui thi - bhk=0 wali purani copy aur bhk>=1 wali nayi copy). Duplicate titles dhoondo aur bhk=0/sqft=0 wali purani copy delete karo, bhk>=1 wali nayi copy rakho. Uske baad ye file (users, builders, land_projects, enquiries, shortlists, saved_searches) seed karo - ye pehli baar seed ho rahi hai, isme duplicate risk nahi hai. Pehle backend/models.py mein har model (User, BuilderCreate/Out, LandProjectOut, EnquiryCreate, ShortlistCreate, SavedSearchCreate) ke exact fields check karo, fir field names match karke insert karo. Pehla user (admin@glcproperty.com, role=admin) super-admin/full-access ke liye hai - confirm karo User model mein 'admin' role already allowed hai.",
+  "users": [
+    {
+      "name": "Bishwajeet Dey",
+      "email": "admin@glcproperty.com",
+      "password": "Admin@123",
+      "phone": "+918969125123",
+      "city": "Kishanganj",
+      "role": "admin",
+      "bio": "Super Admin — full platform access."
+    },
+    {
+      "name": "Suresh Prasad",
+      "email": "suresh.prasad@example.com",
+      "password": "Test@123",
+      "phone": "+919334100001",
+      "city": "Patna",
+      "role": "user"
+    },
+    {
+      "name": "Neha Kumari",
+      "email": "neha.kumari@example.com",
+      "password": "Test@123",
+      "phone": "+919334100002",
+      "city": "Kishanganj",
+      "role": "user"
+    },
+    {
+      "name": "Amit Verma",
+      "email": "amit.verma@example.com",
+      "password": "Test@123",
+      "phone": "+919334100003",
+      "city": "Muzaffarpur",
+      "role": "user"
+    },
+    {
+      "name": "Pooja Singh",
+      "email": "pooja.singh@example.com",
+      "password": "Test@123",
+      "phone": "+919334100004",
+      "city": "Purnia",
+      "role": "user"
+    },
+    {
+      "name": "Rakesh Yadav",
+      "email": "rakesh.yadav@example.com",
+      "password": "Test@123",
+      "phone": "+919334100005",
+      "city": "Bhagalpur",
+      "role": "user"
+    },
+    {
+      "name": "Sanjay Real Estate Agency",
+      "email": "sanjay.agent@example.com",
+      "password": "Agent@123",
+      "phone": "+919334100006",
+      "city": "Patna",
+      "role": "agent",
+      "bio": "8 years experience, specializes in residential resale."
+    },
+    {
+      "name": "Kishanganj Property Consultants",
+      "email": "kpc.agent@example.com",
+      "password": "Agent@123",
+      "phone": "+919334100007",
+      "city": "Kishanganj",
+      "role": "agent",
+      "bio": "Local expert for Kishanganj & Purnia region."
+    },
+    {
+      "name": "Bihar Realty Advisors",
+      "email": "bra.agent@example.com",
+      "password": "Agent@123",
+      "phone": "+919334100008",
+      "city": "Muzaffarpur",
+      "role": "agent",
+      "bio": "Commercial & industrial property specialist."
+    }
+  ],
+  "builders": [
+    {
+      "name": "Ganga Infra Builders",
+      "city": "Patna",
+      "established": 2012,
+      "projects_count": 5,
+      "rera_id": "PBR-2012-0456",
+      "verified": true,
+      "description": "RERA-registered builder with 5 ongoing residential projects.",
+      "image": "https://picsum.photos/seed/builder1/600/400"
+    },
+    {
+      "name": "Emerald Developers Bihar",
+      "city": "Muzaffarpur",
+      "established": 2015,
+      "projects_count": 3,
+      "rera_id": "PBR-2015-0789",
+      "verified": true,
+      "description": "Boutique developer focused on premium villas.",
+      "image": "https://picsum.photos/seed/builder2/600/400"
+    },
+    {
+      "name": "Kishanganj Homes Pvt Ltd",
+      "city": "Kishanganj",
+      "established": 2018,
+      "projects_count": 2,
+      "rera_id": "PBR-2018-0234",
+      "verified": true,
+      "description": "Affordable housing specialist for Kishanganj region.",
+      "image": "https://picsum.photos/seed/builder3/600/400"
+    },
+    {
+      "name": "Purnia Skyline Constructions",
+      "city": "Purnia",
+      "established": 2010,
+      "projects_count": 6,
+      "rera_id": "PBR-2010-0112",
+      "verified": true,
+      "description": "Established name in Purnia commercial & residential real estate.",
+      "image": "https://picsum.photos/seed/builder4/600/400"
+    },
+    {
+      "name": "Bhagalpur Green Estates",
+      "city": "Bhagalpur",
+      "established": 2016,
+      "projects_count": 4,
+      "rera_id": "PBR-2016-0567",
+      "verified": false,
+      "description": "Eco-friendly residential townships.",
+      "image": "https://picsum.photos/seed/builder5/600/400"
+    },
+    {
+      "name": "Gaya Heritage Builders",
+      "city": "Gaya",
+      "established": 2009,
+      "projects_count": 7,
+      "rera_id": "PBR-2009-0098",
+      "verified": true,
+      "description": "Largest builder in Gaya with pilgrimage-area projects.",
+      "image": "https://picsum.photos/seed/builder6/600/400"
+    },
+    {
+      "name": "Darbhanga Modern Homes",
+      "city": "Darbhanga",
+      "established": 2019,
+      "projects_count": 2,
+      "rera_id": "PBR-2019-0345",
+      "verified": false,
+      "description": "New-age modern apartment complexes.",
+      "image": "https://picsum.photos/seed/builder7/600/400"
+    },
+    {
+      "name": "Bihar Sharif Township Developers",
+      "city": "Bihar Sharif",
+      "established": 2014,
+      "projects_count": 3,
+      "rera_id": "PBR-2014-0678",
+      "verified": true,
+      "description": "Integrated township projects near Rajgir corridor.",
+      "image": "https://picsum.photos/seed/builder8/600/400"
+    }
+  ],
+  "land_projects": [
+    {
+      "name": "Kishanganj Green Valley Township",
+      "city": "Kishanganj",
+      "locality": "New Township Road",
+      "area_acres": 12,
+      "plots_available": 45,
+      "price_per_sqft": 750,
+      "developer": "Kishanganj Land Development Co.",
+      "description": "Approved residential plotting scheme with parks and wide roads.",
+      "image": "https://picsum.photos/seed/land1/600/400"
+    },
+    {
+      "name": "Purnia Riverside Plots",
+      "city": "Purnia",
+      "locality": "Ranipatra",
+      "area_acres": 8,
+      "plots_available": 30,
+      "price_per_sqft": 680,
+      "developer": "Purnia Skyline Constructions",
+      "description": "River-facing residential plots with clear title.",
+      "image": "https://picsum.photos/seed/land2/600/400"
+    },
+    {
+      "name": "Patna Metro Corridor Land",
+      "city": "Patna",
+      "locality": "Danapur Extension",
+      "area_acres": 20,
+      "plots_available": 80,
+      "price_per_sqft": 1200,
+      "developer": "Ganga Infra Builders",
+      "description": "Prime land near upcoming metro corridor.",
+      "image": "https://picsum.photos/seed/land3/600/400"
+    },
+    {
+      "name": "Muzaffarpur Industrial Belt",
+      "city": "Muzaffarpur",
+      "locality": "NH28 Bypass",
+      "area_acres": 15,
+      "plots_available": 25,
+      "price_per_sqft": 550,
+      "developer": "Emerald Developers Bihar",
+      "description": "Industrial-zoned land, ideal for warehouses/factories.",
+      "image": "https://picsum.photos/seed/land4/600/400"
+    },
+    {
+      "name": "Gaya Heritage Enclave",
+      "city": "Gaya",
+      "locality": "Manpur Extension",
+      "area_acres": 10,
+      "plots_available": 40,
+      "price_per_sqft": 620,
+      "developer": "Gaya Heritage Builders",
+      "description": "Residential plotting near pilgrimage circuit.",
+      "image": "https://picsum.photos/seed/land5/600/400"
+    },
+    {
+      "name": "Bhagalpur Silk City Plots",
+      "city": "Bhagalpur",
+      "locality": "Sabour Road",
+      "area_acres": 9,
+      "plots_available": 35,
+      "price_per_sqft": 590,
+      "developer": "Bhagalpur Green Estates",
+      "description": "Affordable plotting scheme near Sabour agricultural belt.",
+      "image": "https://picsum.photos/seed/land6/600/400"
+    }
+  ],
+  "enquiries": [
+    {
+      "user_email": "suresh.prasad@example.com",
+      "property_title": "Ganga Enclave Residency",
+      "message": "Interested, please share more photos and best price.",
+      "phone": "+919334100001"
+    },
+    {
+      "user_email": "neha.kumari@example.com",
+      "property_title": "Kishanganj Heights",
+      "message": "Is this ready to move? Looking to buy within a month.",
+      "phone": "+919334100002"
+    },
+    {
+      "user_email": "amit.verma@example.com",
+      "property_title": "Patna Emerald Villa",
+      "message": "Can I schedule a site visit this weekend?",
+      "phone": "+919334100003"
+    },
+    {
+      "user_email": "pooja.singh@example.com",
+      "property_title": "Purnia Business Co-Working Center",
+      "message": "Need details on lease terms and deposit amount.",
+      "phone": "+919334100004"
+    },
+    {
+      "user_email": "rakesh.yadav@example.com",
+      "property_title": "Bhagalpur Auction Land Parcel",
+      "message": "Please confirm if loan/financing is possible on this plot.",
+      "phone": "+919334100005"
+    },
+    {
+      "user_email": "suresh.prasad@example.com",
+      "property_title": "Gaya Garden Bungalow",
+      "message": "What is the final negotiable price?",
+      "phone": "+919334100001"
+    },
+    {
+      "user_email": "neha.kumari@example.com",
+      "property_title": "Darbhanga Twin Row House",
+      "message": "Is broker involved or direct owner deal?",
+      "phone": "+919334100002"
+    },
+    {
+      "user_email": "amit.verma@example.com",
+      "property_title": "Purnia Warehouse GoDown",
+      "message": "Looking for long-term lease, please share owner contact.",
+      "phone": "+919334100003"
+    }
+  ],
+  "shortlists": [
+    {
+      "user_email": "suresh.prasad@example.com",
+      "property_title": "Ganga Enclave Residency"
+    },
+    {
+      "user_email": "suresh.prasad@example.com",
+      "property_title": "Patna Emerald Villa"
+    },
+    {
+      "user_email": "neha.kumari@example.com",
+      "property_title": "Kishanganj Heights"
+    },
+    {
+      "user_email": "neha.kumari@example.com",
+      "property_title": "Kishanganj Plotting Land Scheme"
+    },
+    {
+      "user_email": "amit.verma@example.com",
+      "property_title": "Muzaffarpur Luxury Estate"
+    },
+    {
+      "user_email": "pooja.singh@example.com",
+      "property_title": "Purnia Business Co-Working Center"
+    },
+    {
+      "user_email": "rakesh.yadav@example.com",
+      "property_title": "Bhagalpur Grand Luxury House"
+    }
+  ],
+  "saved_searches": [
+    {
+      "user_email": "suresh.prasad@example.com",
+      "search_name": "Patna 3BHK under 60L",
+      "filters": {
+        "city": "Patna",
+        "bhk": 3,
+        "max_price": 6000000
+      }
+    },
+    {
+      "user_email": "neha.kumari@example.com",
+      "search_name": "Kishanganj Plots",
+      "filters": {
+        "city": "Kishanganj",
+        "property_type": "PlottingLand"
+      }
+    },
+    {
+      "user_email": "amit.verma@example.com",
+      "search_name": "Muzaffarpur Villas",
+      "filters": {
+        "city": "Muzaffarpur",
+        "property_type": "Villa"
+      }
+    },
+    {
+      "user_email": "pooja.singh@example.com",
+      "search_name": "Purnia Rent Office",
+      "filters": {
+        "city": "Purnia",
+        "property_type": "Office",
+        "purpose": "Rent"
+      }
+    },
+    {
+      "user_email": "rakesh.yadav@example.com",
+      "search_name": "Bhagalpur Under 1Cr",
+      "filters": {
+        "city": "Bhagalpur",
+        "max_price": 10000000
+      }
+    }
+  ]
+}
