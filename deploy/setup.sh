@@ -16,6 +16,7 @@ if ss -ltn | grep -q ":${PORT} "; then
   [ -f /etc/systemd/system/glc-property.service ] || { echo "port ${PORT} is already used: run with PORT=8011 bash deploy/setup.sh"; exit 1; }
 fi
 
+git config --global --get-all safe.directory | grep -qx "$APP" || git config --global --add safe.directory "$APP"
 if [ ! -d "$APP/.git" ]; then git clone "$REPO" "$APP"; else git -C "$APP" pull --ff-only origin main; fi
 cd "$APP"
 
