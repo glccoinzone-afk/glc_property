@@ -2,6 +2,7 @@
 # GLC Property: update after new code is merged to main (run as root on the server).
 set -euo pipefail
 APP=/var/www/glc-property
+git config --global --get-all safe.directory | grep -qx "$APP" || git config --global --add safe.directory "$APP"   # the app is owned by www-data, git refuses root otherwise
 cd "$APP"
 git pull --ff-only origin main
 ./backend/venv/bin/pip install -q -r deploy/requirements.txt
