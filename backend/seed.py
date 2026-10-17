@@ -2,6 +2,7 @@
 from database import users_col, properties_col, builders_col, land_projects_col
 from auth import hash_password
 from datetime import datetime, timezone, timedelta
+import os
 import uuid
 import random
 
@@ -43,9 +44,22 @@ LOCALITIES = ['Dharamganj', 'Bangali Lane', 'Line Bazar', 'Ward 28', 'Chakla Roa
 
 
 async def seed_users():
+    """First start only. Demo accounts with known passwords exist only when SEED_DEMO_USERS=1 (never on a public server);
+    otherwise a single super admin is made from ADMIN_EMAIL / ADMIN_PASSWORD in backend/.env."""
     if await users_col.count_documents({}) > 0:
         return
     now = datetime.now(timezone.utc)
+    if os.environ.get('SEED_DEMO_USERS') != '1':
+        email = os.environ.get('ADMIN_EMAIL', '').strip().lower()
+        password = os.environ.get('ADMIN_PASSWORD', '')
+        if not email or not password:
+            print('[seed] ADMIN_EMAIL / ADMIN_PASSWORD not set: no admin user created')
+            return
+        await users_col.insert_one({'id': str(uuid.uuid4()), 'name': 'Super Admin', 'email': email,
+                                    'phone': os.environ.get('ADMIN_PHONE', ''), 'role': 'super_admin', 'status': 'active',
+                                    'password': hash_password(password), 'created_at': now})
+        print('[seed] Created the super admin from ADMIN_EMAIL')
+        return
     users = [
         {'id': str(uuid.uuid4()), 'name': 'Super Admin', 'email': 'admin@glcproperty.com', 'phone': '+919011037538',
          'role': 'super_admin', 'status': 'active', 'password': hash_password('admin123'), 'created_at': now},

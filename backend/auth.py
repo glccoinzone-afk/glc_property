@@ -7,6 +7,8 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from database import users_col
 
 JWT_SECRET = os.environ.get('JWT_SECRET', 'change-me')
+if JWT_SECRET == 'change-me' and os.environ.get('APP_ENV') == 'production':
+    raise RuntimeError('Set JWT_SECRET in backend/.env (APP_ENV=production)')
 JWT_ALG = 'HS256'
 JWT_EXP_HOURS = 24 * 7  # 7 days
 
